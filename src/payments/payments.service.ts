@@ -28,7 +28,7 @@ export class PaymentsService {
       // Colocar aquí el ID de mi orden
       payment_intent_data: {
         metadata: {
-          orderId: orderId
+          orderId: orderId,
         },
       },
       line_items: lineItems,
@@ -58,19 +58,19 @@ export class PaymentsService {
       res.status(400).send(`Webhook Error: ${err.message}`);
       return;
     }
-    
-    switch( event.type ) {
-      case 'charge.succeeded': 
+
+    switch (event.type) {
+      case 'charge.succeeded':
         const chargeSucceeded = event.data.object;
         // TODO: llamar nuestro microservicio
         console.log({
           metadata: chargeSucceeded.metadata,
           orderId: chargeSucceeded.metadata.orderId,
         });
-      break;
-      
+        break;
+
       default:
-        console.log(`Event ${ event.type } not handled`);
+        console.log(`Event ${event.type} not handled`);
     }
 
     return res.status(200).json({ sig });
